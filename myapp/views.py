@@ -1,5 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 def hello_world(response):
-  return HttpResponse("Hello World")
+  return render(response, 'myapp.html')
+
+def index(response):
+  title = 'django course'
+  return render(response, 'index.html', {
+    'title': title
+  })
