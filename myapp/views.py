@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.http import HttpResponse
 from .models import Project, Tasks
 
 def hello_world(response, username):
@@ -12,10 +12,10 @@ def index(response):
     'title': title
   })
 
-def project(response, id):
+def project(response):
   projects = list(Project.objects.values())
-  return JsonResponse(projects, safe=False)
+  return render(response, 'projects.html')
 
-def tasks(response, id):
-  task = get_object_or_404(Tasks, id=id)
-  return HttpResponse('tasks: %s' % task.title)
+def tasks(response):
+  # task = Tasks.objects.get(title=title)
+  return render(response, 'tasks.html')
