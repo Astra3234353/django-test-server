@@ -13,9 +13,13 @@ def index(response):
   })
 
 def project(response):
-  projects = list(Project.objects.values())
-  return render(response, 'projects.html')
+  projects = Project.objects.all()
+  return render(response, 'projects.html', {
+    'projects': projects
+  })
 
 def tasks(response):
-  # task = Tasks.objects.get(title=title)
-  return render(response, 'tasks.html')
+  tasks = Tasks.objects.all()
+  return render(response, 'tasks.html', {
+    'tasks': tasks
+  })
