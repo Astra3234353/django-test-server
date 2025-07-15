@@ -1,27 +1,17 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .models import Project, Tasks
-from .forms import CreateNewTask
+from .forms import CreateNewTask, CreateNewProject
 
-def hello_world(response, username):
-  print(username)
-  return render(response, 'myapp.html')
 
-def index(response):
-  title = 'django course'
-  return render(response, 'index.html', {
-    'title': title
-  })
-
-def project(response):
+def project(request):
   projects = Project.objects.all()
-  return render(response, 'projects.html', {
+  return render(request, 'projects.html', {
     'projects': projects
   })
 
-def tasks(response):
+def tasks(request):
   tasks = Tasks.objects.all()
-  return render(response, 'tasks.html', {
+  return render(request, 'tasks.html', {
     'tasks': tasks
   })
 
@@ -31,4 +21,13 @@ def create_task(request):
   else:
     Tasks.objects.create(title=request.POST['title'],
     description=request.POST['description'], project_id=2)
-    return redirect('tasks/')
+    return redirect('tasks')
+  
+def create_project(request):
+  if request.method == "GET":
+    return render(request, 'create_project.html', {
+      'form': CreateNewProject
+    })
+  else:
+    Project.objects.create(name=request.POST['name'])
+    return redirect('project')
